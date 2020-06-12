@@ -3,79 +3,64 @@ import { Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap';
 
 class DishDetail extends Component {
 
-    constructor(props) {
-        super(props);
-    }
+    /* constructor(props) {
+         super(props);
+     }*/
 
     renderDish(dish) {
-        if (dish != null) {
-            return (
-                <div className="col-12 col-md-5 m-1">
-                    <Card>
-                        <CardImg width="100%" src={dish.image} alt={dish.name} />
-                        <CardBody>
-                            <CardTitle>{dish.name}</CardTitle>
-                            <CardText>{dish.description}</CardText>
-                        </CardBody>
-                    </Card>
-                </div>
-            );
-        }
-        else {
-            return (
-                <div></div>
-            );
-        }
+        return (
+            <div className="col-12 col-md-5 m-1">
+                <Card>
+                    <CardImg width="100%" src={dish.image} alt={dish.name} />
+                    <CardBody>
+                        <CardTitle>{dish.name}</CardTitle>
+                        <CardText>{dish.description}</CardText>
+                    </CardBody>
+                </Card>
+            </div>
+        );
     }
 
     renderComments(comments) {
-        if (comments != null) {
 
-            const commentArray = comments.map((cmt) => {
+        const commentArray = comments.map((cmt) => {
 
-                var new_date = new Date(cmt.date);
-                var dateList = new_date.toDateString().split(" ");
-
-                return (
-                    <div key={cmt.id}>
-                        <li>{cmt.comment}</li>
-                        <br></br>
-                        <li>-- {cmt.author}, {dateList[1]} {dateList[2]}, {dateList[3]}</li>
-                        <br></br>
-                    </div>
-                );
-            })
+            var date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day:'2-digit' }).format(new Date(Date.parse(cmt.date)));
 
             return (
-                <div className="col-12 col-md-5 m-1">
-                    <h4>Comments</h4>
-                    <ul className="list-unstyled">
-                        {commentArray}
-                    </ul>
+                <div key={cmt.id}>
+                    <p>{cmt.comment}</p>
+                    <p>-- {cmt.author}, {date}</p>
                 </div>
             );
-        }
-        else {
-            return (
-                <div></div>
-            );
-        }
+        })
+
+        return (
+            <div className="col-12 col-md-5 m-1">
+                <h4>Comments</h4>
+                <ul className="list-unstyled">
+                    {commentArray}
+                </ul>
+            </div>
+        );
     }
 
     render() {
 
-        const selectedDish = this.props.selectedDish;
+        var selectedDish = this.props.dish;
 
         if (selectedDish != null) {
             return (
-                <div className="row">
-                    {this.renderDish(selectedDish)}
-                    {this.renderComments(selectedDish.comments)}
+                <div className="container">
+                    <div className="row">
+                        {this.renderDish(selectedDish)}
+                        {this.renderComments(selectedDish.comments)}
+                    </div>
                 </div>
             );
         }
-        else{
-            return(
+        else {
+            return (
                 <div></div>
             );
         }
