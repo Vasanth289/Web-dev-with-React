@@ -8,7 +8,7 @@ function RenderDish({ dish }) {
             <Card>
                 <CardImg width="100%" src={dish.image} alt={dish.name} />
                 <CardBody>
-                    <CardTitle>{dish.name}</CardTitle>
+                    <CardTitle><strong>{dish.name}</strong></CardTitle>
                     <CardText>{dish.description}</CardText>
                 </CardBody>
             </Card>
@@ -25,7 +25,7 @@ function RenderComments({ comments }) {
         return (
             <li key={cmt.id}>
                 <p>{cmt.comment}</p>
-                <p>-- {cmt.author}, {date}</p>
+                <p><em>-- {cmt.author}, {date}</em></p>
             </li>
         );
     })

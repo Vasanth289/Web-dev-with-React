@@ -6,8 +6,9 @@ function RenderCard({item}) {
         <Card>
             <CardImg src={item.image} alt={item.name} />
             <CardBody>
-                <CardTitle>{item.name}</CardTitle>
-                {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}
+                <CardTitle><strong>{item.name}</strong></CardTitle>
+                {item.designation ? <CardSubtitle><em>{item.designation}</em></CardSubtitle> : null}
+                <hr />
                 <CardText>{item.description}</CardText>
             </CardBody>
         </Card>
