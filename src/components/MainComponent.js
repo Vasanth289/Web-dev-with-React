@@ -27,10 +27,13 @@ class Main extends Component {
     render() {
 
         const HomePage = () => {
+
+            let i = Math.floor(Math.random() * 4);
+
             return(
-                <Home dish={this.props.dishes.filter((dish) => dish.featured)[0]}
+                <Home dish={this.props.dishes.filter((dish) => dish.featured)[i]}
                 promotion={this.props.promotions.filter((promo) => promo.featured)[0]}
-                leader={this.props.leaders.filter((leader) => leader.featured)[0]}
+                leader={this.props.leaders.filter((leader) => leader.featured)[i]}
                  />
             );
         }
