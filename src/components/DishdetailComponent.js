@@ -4,17 +4,23 @@ import { Link } from 'react-router-dom';
 import CommentForm from './CommentComponent';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from "../shared/baseUrl";
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 function RenderDish({ dish }) {
     return (
         <div className="col-12 col-md-5 m-1">
-            <Card>
-                <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
-                <CardBody>
-                    <CardTitle><strong>{dish.name}</strong></CardTitle>
-                    <CardText>{dish.description}</CardText>
-                </CardBody>
-            </Card>
+            <FadeTransform in
+                transformProps={{
+                    exitTransform: 'sacle(0.5) translateY(-50%)'
+                }}>
+                <Card>
+                    <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
+                    <CardBody>
+                        <CardTitle><strong>{dish.name}</strong></CardTitle>
+                        <CardText>{dish.description}</CardText>
+                    </CardBody>
+                </Card>
+            </FadeTransform>
         </div>
     );
 }
@@ -26,10 +32,12 @@ function RenderComments({ comments, postComment, dishId }) {
         var date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(cmt.date)));
 
         return (
-            <li key={cmt.id}>
-                <p>{cmt.comment}</p>
-                <p><em>-- {cmt.author}, {date}</em></p>
-            </li>
+            <Fade in>
+                <li key={cmt.id}>
+                    <p>{cmt.comment}</p>
+                    <p><em>-- {cmt.author}, {date}</em></p>
+                </li>
+            </Fade>
         );
     })
 
@@ -37,7 +45,9 @@ function RenderComments({ comments, postComment, dishId }) {
         <div className="col-12 col-md-5 m-1">
             <h4>Comments</h4>
             <ul className="list-unstyled">
-                {commentArray}
+                <Stagger in>
+                    {commentArray}
+                </Stagger>
             </ul>
             <CommentForm dishId={dishId} postComment={postComment} />
         </div>
@@ -46,7 +56,7 @@ function RenderComments({ comments, postComment, dishId }) {
 
 const DishDetail = (props) => {
     if (props.isLoading) {
-        return(
+        return (
             <div className="container">
                 <div className="row">
                     <Loading />
@@ -55,7 +65,7 @@ const DishDetail = (props) => {
         );
     }
     else if (props.errMess) {
-        return(
+        return (
             <div className="container">
                 <div className="row">
                     <h4>{props.errMess}</h4>
